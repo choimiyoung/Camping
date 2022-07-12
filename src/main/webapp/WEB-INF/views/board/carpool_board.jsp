@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
     
 <!DOCTYPE html>
 <html>
@@ -64,7 +66,7 @@ function search() {
 		</table>
 	</form>
   <input class="btn" type="button" value="글쓰기"
-		 onclick="location.href=#">
+		 onclick="location.href='../homepage/main.do'">
   
 </div>
 <table  class="table_list">
@@ -76,46 +78,27 @@ function search() {
 <col width="200px">
 </colgroup>
 <thead>
-<tr >
+<tr>
   <th>번호</th>
   <th>제목</th>
-  <th>좋아요</th>
   <th>조회수</th>
+  <th>좋아요</th>
   <th>작성자</th>
   <th>작성일</th>
 </tr>
 </thead>
 
 <tbody>
- <tr>
-  <td>1</td>
-  <td class="subject"><a href="#">7월2일 토요일 서울 출발 동행구해요</a></td>
-  <td>1</td>
-  <td>13</td>
-  <td>캠핑조아</td>
-  <td>2022.06.23</td>
- </tr>
- <tr>
-  <td>2</td>
-  <td class="subject"><a href="#">동행구함</a></td>
-  <td>7</td>
-  <td>13</td>
-  <td>캠핑짱</td>
-  <td>2022.06.23</td>
- </tr>
- <tr>
-  <td>3</td>
-  <td class="subject"><a href="#">같이가실분</a></td>
-  <td>3</td>
-  <td>15</td>
-  <td>캠핑</td>
-  <td>2022.06.23</td>
- </tr>
- <!-- 게시글없는경우 -->
- <tr>
-  <td colspan="6">현재 게시글이 없습니다.</td>
- </tr>
-</tbody>
+	<c:forEach var="vo" items="${ list }">
+		<tr>
+			<td>${ vo.carpool_idx }</td>
+			<td class="subject"><a href="#">${ vo.carpool_title }</td>
+			<td>${ vo.carpool_hit_count }</td>
+			<td>${ vo.carpool_like_count }</td>
+			<td>${ vo.mem_nickname }</td>
+			<td>${ fn:substring(vo.carpool_regdate,0,10) }</td>
+		</tr>
+	</c:forEach>
 </table>
 <div class="page_wrap">
    <div class="page_nation">
