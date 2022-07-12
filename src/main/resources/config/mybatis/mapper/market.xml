@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="market">
+	
+	<!-- 마켓게시판목록 조회 -->
+ 
+	<select id="market_list" resultType="vo.MarketVo">
+		select * from market order by idx desc
+	</select>
+	
+	<!-- 조건별 검색 : Dynamic Query-->
+	<select id="market_list_condition" parameterType="java.util.Map" resultType="vo.MarketVo">
+		select * from market
+		<trim prefix="where" prefixOverrides="or">
+			<if test="mem_nickname!=null">
+				mem_nickname like '%' || #{mem_nickname} || '%'
+			</if>
+			<if test="market_content!=null">
+				or market_content  like '%' || #{market_content} || '%' 
+			</if>
+		</trim>
+		order by market_idx desc
+	</select>
+
+	<select id="market_one" parameterType="int" resultType="market">
+		select * from market_one where idx= #{market_idx}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
